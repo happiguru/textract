@@ -12,3 +12,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.Tableinput {
+  width: 150px;
+}
+
+.TableinputDisabled {
+  width: 100px;
+}

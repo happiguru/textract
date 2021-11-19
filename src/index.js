@@ -1,27 +1,88 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import axios from 'axios';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 import {createStore} from 'redux';
-import studentReducer from './reducers/studentReducer';
+import LineItemReducer from './reducers/lineItemReducer';
 import {Provider} from 'react-redux'
 
-let initialState = [{id:1,name:'John Doe',grade:1,school:'React Redux School'},{id:2,name:'Jane Doe',grade:2,school:'React Redux School'}
-,{id:3,name:'Terry Adams',grade:3,school:'React Redux School'},{id:4,name:'Jenny Smith',grade:4,school:'React Redux School'}];
+let initialState = [
+    {
+      'Match/No-Match/Missing': 'match',
+      discountExt: '0',
+      discountMatches: false,
+      discountOrd: '0',
+      lineOrder: 1,
+      nameExt: 'INSTITUTE CAP',
+      nameMatches: false,
+      nameOrd: 'INSTITUTE CAP DBL',
+      priceExt: '15.89',
+      priceMatches: true,
+      priceOrd: '15.89',
+      quantityExt: '32',
+      quantityMatches: false,
+      quantityOrd: '30',
+      supplierSKUExt: 'HW2140-DBL',
+      supplierSKUMatches: true,
+      supplierSKUOrd: 'HW2140-DBL',
+      totalExt: '508.48',
+      totalMatches: false,
+      totalOrd: '476.70',
+      uploadDisc: '0',
+      uploadName: 'INSTITUTE CAP',
+      uploadPrice: '15.89',
+      uploadQty: '32',
+      uploadSku: 'HW2140-DBL',
+      uploadTotal: '508.48',
+      approved: false,
+    },
+    {
+        'Match/No-Match/Missing': 'match',
+        discountExt: '0',
+        discountMatches: false,
+        discountOrd: '0',
+        lineOrder: 2,
+        nameExt: 'INSTITUTE CAP',
+        nameMatches: false,
+        nameOrd: 'INSTITUTE CAP GNT',
+        priceExt: '15.89',
+        priceMatches: true,
+        priceOrd: '15.89',
+        quantityExt: '32',
+        quantityMatches: false,
+        quantityOrd: '30',
+        supplierSKUExt: 'HW2140-GNT',
+        supplierSKUMatches: true,
+        supplierSKUOrd: 'HW2140-GNT',
+        totalExt: '508.48',
+        totalMatches: false,
+        totalOrd: '476.70',
+        uploadDisc: '0',
+        uploadName: 'INSTITUTE CAP',
+        uploadPrice: '15.89',
+        uploadQty: '32',
+        uploadSku: 'HW2140-GNT',
+        uploadTotal: '508.48',
+        approved: false,
+      }
+]
 
-if( localStorage.getItem("students") === null)
-localStorage.setItem('students',JSON.stringify(initialState));
+// const fetchData = () => {
+//     return axios.get('data_for_state.json')
+//     .then((response) => console.log(response.data.textract.matched));
+// }
+
+
+localStorage.clear();
+if( localStorage.getItem("lineItems") === null)
+localStorage.setItem('lineItems',JSON.stringify(initialState));
 else 
-initialState = JSON.parse(localStorage.getItem('students'));
+initialState = JSON.parse(localStorage.getItem('lineItems'));
 
-const store = createStore(studentReducer,initialState);
+const store = createStore(LineItemReducer,initialState, // eslint-disable-next-line no-underscore-dangle
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 
 ReactDOM.render(
 <Provider store={store}><App /></Provider>, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();

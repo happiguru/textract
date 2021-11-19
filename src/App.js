@@ -1,70 +1,66 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import StudentList from './StudentList.jsx';
+import LinetItemList from './LinetItemList.jsx';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {addStudent,deleteStudent,updateStudent} from './actions/studentActions'
+import { deleteLineItem, updateLineItem } from './actions/lineItemActions'
 
 class App extends Component {
   constructor(props)
   {
     super(props);
-    this.addNewStudent = this.addNewStudent.bind(this);
-    this.deleteStudent = this.deleteStudent.bind(this);
-    this.editStudentSubmit = this.editStudentSubmit.bind(this);
+    this.deleteLineItem = this.deleteLineItem.bind(this);
+    this.editLinetItemSubmit = this.editLinetItemSubmit.bind(this);
   }
   componentWillMount(){
 
   }
-  addNewStudent()
-  {
-this.props.addStudent({id:Math.max(...this.props.studentList.map(function(o){return o.id})) + 1,name:'',grade:1,school:''});
-  }
 
-  deleteStudent(id)
+  deleteLineItem(lineOrder)
   {
     let r = window.confirm("Do you want to delete this item");
     if( r === true)
     {
-    this.props.deleteStudent(id);
+    this.props.deleteLineItem(lineOrder);
    
   }
   }
-  editStudentSubmit(id,name,grade,school)
+  editLinetItemSubmit(lineOrder,uploadSku,uploadName,uploadQty, uploadPrice, uploadTotal)
   {
-this.props.updateStudent({id:id,name:name,grade:grade,school:school});
+this.props.updateLineItem({lineOrder:lineOrder,uploadSku:uploadSku,uploadName:uploadName,uploadQty:uploadQty, uploadPrice:uploadPrice, uploadTotal:uploadTotal});
   }
   render() {
     return (
       <div className="container-fluid">
       <div className="row mt-3"><div className="col-lg-12">
       <div className="card">
-  <div className="card-header">
-    Student Registry
-  </div>
-  <div className="card-body">
-  <table className="table table-hover">
-          <thead className="thead-dark"><tr><th>Name</th><th>Grade</th><th>School</th><th>Edit/Save</th><th>Delete</th></tr></thead>
-          <StudentList deleteStudent={this.deleteStudent} studentList={this.props.studentList} editStudentSubmit={this.editStudentSubmit}/>
-        </table>
-        <button className="btn btn-dark pull-left" onClick={this.addNewStudent}>Add New</button>
-      </div></div></div></div></div>
+        <div className="card-header">
+          Product Directory
+        </div>
+        <div className="card-body">
+          <table className="table table-hover">
+                  <thead className="thead-dark"><tr><th>SKU</th><th>NAME</th><th>QUANTITY</th><th>PRICE</th><th>TAX</th><th>TOTAL</th><th>ACTION</th><th>Delete</th></tr></thead>
+                  <LinetItemList deleteLineItem={this.deleteLineItem} lineItemList={this.props.lineItemList} editLinetItemSubmit={this.editLinetItemSubmit}/>
+          </table>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    studentList : state
+    lineItemList : state
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    addStudent:addStudent,
-    deleteStudent:deleteStudent,
-    updateStudent:updateStudent
+    deleteLineItem:deleteLineItem,
+    updateLineItem:updateLineItem
   },dispatch);
 }
 
